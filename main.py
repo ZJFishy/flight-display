@@ -140,27 +140,31 @@ def print_all_flight_details() -> None:
         summary = parse_details(flight_details)
         print_flight_info(summary)
 
-def get_closest_flight_details() -> None:
+def get_closest_flight_details() -> str:
     flights = get_flights()
     closest_flight = get_closest_flight(flights)
     flight_details = get_details(closest_flight)
     summary = parse_details(flight_details)
-    get_flight_info(summary)
+    return get_flight_info(summary)
 
-def get_n_closest_flight_details(n=1) -> None:
+def get_n_closest_flight_details(n=1) -> str:
     flights = get_flights()
     sorted_flights = sorted(d := get_distances(flights), key = d.get)
     if len(sorted_flights) > n:
         sorted_flights = sorted_flights[:n]
+    result = """"""
     for flight in sorted_flights:
         flight_details = get_details(flight)
         summary = parse_details(flight_details)
-        get_flight_info(summary)
+        result += get_flight_info(summary)
+    return result
 
-def get_all_flight_details() -> None:
+def get_all_flight_details() -> str:
     flights = get_flights()
     sorted_flights = sorted(d := get_distances(flights), key = d.get)
+    result = """"""
     for flight in sorted_flights:
         flight_details = get_details(flight)
         summary = parse_details(flight_details)
-        get_flight_info(summary)
+        result += get_flight_info(summary)
+    return result
