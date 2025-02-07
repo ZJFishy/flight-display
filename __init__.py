@@ -81,9 +81,9 @@ def print_flight_info(summary: dict) -> None:
     print(SEPARATOR)
     print(summary["callsign"])
     print(summary["airline"])
-    print(f"{summary["origin_name"]} ({summary["origin_code"]}) -> {summary["destination_name"]} ({summary["destination_code"]})")
-    print(f"{summary["aircraft_model"]} ({summary["aircraft_registration"]})")
-    print(f"{summary["speed"]} knots, {summary["altitude"]} feet")
+    print(f'{summary["origin_name"]} ({summary["origin_code"]}) -> {summary["destination_name"]} ({summary["destination_code"]})')
+    print(f'{summary["aircraft_model"]} ({summary["aircraft_registration"]})')
+    print(f'{summary["speed"]} knots, {summary["altitude"]} feet')
     try:
         secs_elapsed = time.time() - summary["departure_time"]
         hours_elapsed = secs_elapsed // 3600
