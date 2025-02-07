@@ -94,6 +94,27 @@ def print_flight_info(summary: dict) -> None:
         print("Unknown time elapsed")
     print(SEPARATOR)
 
+def get_flight_info(summary: dict) -> str:
+    SEPARATOR = "- " * 20
+    try:
+        secs_elapsed = time.time() - summary["departure_time"]
+        hours_elapsed = secs_elapsed // 3600
+        secs_elapsed %= 3600
+        mins_elapsed = secs_elapsed // 60
+        time_string = f"{str(int(hours_elapsed)).zfill(2)}:{str(int(mins_elapsed)).zfill(2)} elapsed"
+    except:
+        time_string = "Unknown time elapsed"
+    return f"""
+{SEPARATOR}
+{summary["callsign"]}
+{summary["airline"]}
+{summary["origin_name"]} ({summary["origin_code"]}) -> {summary["destination_name"]} ({summary["destination_code"]})
+{summary["aircraft_model"]} ({summary["aircraft_registration"]})
+{summary["speed"]} knots, {summary["altitude"]} feet
+{time_string}
+{SEPARATOR}
+"""
+
 def print_closest_flight_details() -> None:
     flights = get_flights()
     closest_flight = get_closest_flight(flights)
@@ -119,5 +140,27 @@ def print_all_flight_details() -> None:
         summary = parse_details(flight_details)
         print_flight_info(summary)
 
-if __name__ == "__main__":
-    print_closest_flight_details()
+def get_closest_flight_details() -> None:
+    flights = get_flights()
+    closest_flight = get_closest_flight(flights)
+    flight_details = get_details(closest_flight)
+    summary = parse_details(flight_details)
+    get_flight_info(summary)
+
+def get_n_closest_flight_details(n=1) -> None:
+    flights = get_flights()
+    sorted_flights = sorted(d := get_distances(flights), key = d.get)
+    if len(sorted_flights) > n:
+        sorted_flights = sorted_flights[:n]
+    for flight in sorted_flights:
+        flight_details = get_details(flight)
+        summary = parse_details(flight_details)
+        get_flight_info(summary)
+
+def get_all_flight_details() -> None:
+    flights = get_flights()
+    sorted_flights = sorted(d := get_distances(flights), key = d.get)
+    for flight in sorted_flights:
+        flight_details = get_details(flight)
+        summary = parse_details(flight_details)
+        get_flight_info(summary)
